@@ -1,6 +1,7 @@
 <template>
   <div class="parent">
     <h1>Github Jobs</h1>
+    <Filters />
     <div v-if="loading" class="loading">
       loading...
     </div>
@@ -12,10 +13,14 @@
 
 <script>
   import Job from "./Job.vue";
+  import Filters from "../FilterComponent/Filters.vue";
+
   import { mapActions, mapGetters } from "vuex";
+
   export default {
     name: "Home",
     components: {
+      Filters,
       Job,
     },
     data() {

@@ -5,11 +5,16 @@
         {{ job.title }} - <span class="company">{{ job.company }}</span>
       </p>
 
-      <img :src="job.company_logo" alt="company logo" width="50" />
+      <img
+        v-if="job.company_logo"
+        :src="job.company_logo"
+        alt="company logo"
+        width="50"
+      />
     </div>
     <p class="date">{{ new Date(job.created_at).toDateString() }}</p>
-    <span class="type">{{ job.type }}</span>
-    <span class="location">{{ job.location }}</span>
+    <sui-label key="small" color="violet">{{ job.type }}</sui-label>
+    <sui-label key="tiny" color="purple">{{ job.location }}</sui-label>
     <p class="short_description">
       {{ job.company_url }}
     </p>
@@ -20,9 +25,8 @@
           Click to see description
         </sui-accordion-title>
         <sui-accordion-content>
-          <p class="description">
-            {{ description }}
-          </p>
+          <p v-html="job.description"></p>
+          <div v-html="job.how_to_apply"></div>
         </sui-accordion-content>
       </sui-accordion>
     </div>

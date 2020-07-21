@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div class="app">
     <Home />
   </div>
 </template>
 
 <script>
-import Home from "./components/Home";
-export default {
-  components: {
-    Home
-  }
-};
+  import Home from "./components/Home";
+
+  export default {
+    components: {
+      Home,
+    },
+  };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
