@@ -5,11 +5,11 @@
         <sui-form-fields fields="three">
           <sui-form-field>
             <label>Description</label>
-            <input placeholder="Description" type="text" />
+            <input placeholder="Description" type="text" v-model="query.lang" />
           </sui-form-field>
           <sui-form-field>
             <label>Location</label>
-            <input placeholder="Location" type="text" />
+            <input placeholder="Location" type="text" v-model="query.country" />
           </sui-form-field>
           <!-- <sui-form-field>
             <label>Filter By Stack</label>
@@ -18,6 +18,7 @@
             </select>
           </sui-form-field> -->
         </sui-form-fields>
+        <sui-button @click="searchJobs()">Search</sui-button>
       </sui-form>
     </div>
   </div>
@@ -29,7 +30,6 @@
     name: "Filters",
     data() {
       return {
-        query: "",
         filters: [
           "Full Stack Engineer (f/m/x)",
           "Backend Software Engineer",
@@ -81,15 +81,20 @@
           "Data Engineer (m/f) - Germany",
           "Senior Python Software Engineer ",
         ],
+        query: {
+          lang: "",
+          country: "",
+        },
       };
     },
     methods: {
-      ...mapActions(["filterJobs"]),
+      ...mapActions(["filterJobs", "fetchJobs"]),
       getTyp() {
         console.log(this.getTypes);
       },
-      onChange(event) {
-        this.filterJobs(event.target.value);
+      searchJobs() {
+        this.fetchJobs(this.query);
+        // console.log(this.query);
       },
     },
     computed: {

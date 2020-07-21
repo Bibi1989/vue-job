@@ -26,17 +26,23 @@
     data() {
       return {
         loading: null,
+        query: {
+          lang: "python",
+          country: "usa",
+        },
+        store: this.getQuery,
       };
     },
     methods: {
       ...mapActions(["fetchJobs"]),
     },
     computed: {
-      ...mapGetters(["getJobs"]),
+      ...mapGetters(["getJobs", "getQuery"]),
     },
     created() {
       this.loading = true;
-      this.fetchJobs()
+      console.log({ state: this.store });
+      this.fetchJobs(this.getQuery)
         .then(() => {
           this.loading = null;
         })
