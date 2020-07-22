@@ -53,8 +53,10 @@ export default new Vuex.Store({
         axios
           .get(
             `${URL}description=${
-              query.lang ? query.lang : "python"
-            }&full_time=true&location=${query.country ? query.country : "usa"}`
+              query.lang ? query.lang.toLowerCase() : "python"
+            }&full_time=true&location=${
+              query.country ? query.country.toLowerCase() : "usa"
+            }`
           )
           .then((response) => {
             console.log(response.data);
