@@ -17,8 +17,11 @@
               <option v-for="g in filters" :key="g" :value="g">{{ g }}</option>
             </select>
           </sui-form-field> -->
+          <sui-form-field>
+            <label for="" class="opacity">Button</label>
+            <sui-button @click="searchJobs()" color="violet">Search</sui-button>
+          </sui-form-field>
         </sui-form-fields>
-        <sui-button @click="searchJobs()">Search</sui-button>
       </sui-form>
     </div>
   </div>
@@ -89,9 +92,6 @@
     },
     methods: {
       ...mapActions(["filterJobs", "fetchJobs"]),
-      getTyp() {
-        console.log(this.getTypes);
-      },
       searchJobs() {
         this.fetchJobs(this.query);
         // console.log(this.query);
@@ -103,13 +103,13 @@
         return this.getTypes;
       },
     },
-    created() {
-      this.getTyp();
-    },
   };
 </script>
 
 <style lang="scss" scoped>
+  .opacity {
+    opacity: 0;
+  }
   .select {
     outline: none;
   }

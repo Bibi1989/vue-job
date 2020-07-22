@@ -10,7 +10,11 @@ const URL =
 export default new Vuex.Store({
   state: {
     jobs: [],
-    query: {},
+    query: {
+      lang: "node",
+      country: "usa",
+    },
+    loading: null,
   },
   getters: {
     getJobs(state) {
@@ -21,21 +25,30 @@ export default new Vuex.Store({
       return [...new Set(types)];
     },
     getQuery(state) {
-      console.log(state.query);
       return state.query;
+    },
+    getCountry(state) {
+      return state.query.country;
+    },
+    getLoading(state) {
+      return state.loading;
     },
   },
   mutations: {
     fetchJobs(state, payload) {
       state.jobs = payload;
+      state.loading = true;
     },
     filterJobs(state, payload) {
       state.query = payload;
     },
+    loading(state, payload) {
+      state.loading = payload;
+    },
   },
   actions: {
     fetchJobs({ commit }, query) {
-      console.log(query);
+      commit("loading", true);
       return new Promise((resolve, reject) => {
         axios
           .get(
@@ -46,6 +59,8 @@ export default new Vuex.Store({
           .then((response) => {
             console.log(response.data);
             commit("fetchJobs", response.data);
+            commit("filterJobs", query);
+            commit("loading", null);
             resolve(response);
           })
           .catch((error) => {
@@ -54,7 +69,6 @@ export default new Vuex.Store({
       });
     },
     filterJobs({ commit }, obj) {
-      console.log({ obj });
       commit("filterJobs", obj);
     },
   },

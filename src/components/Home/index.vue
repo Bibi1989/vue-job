@@ -2,7 +2,11 @@
   <div class="parent">
     <h1>Github Jobs</h1>
     <Filters />
-    <div v-if="loading" class="loading">
+    <p v-if="country">
+      Available jobs - {{ getJobs.length }} in
+      {{ country }}
+    </p>
+    <div v-if="getLoading" class="loading">
       loading...
     </div>
     <div v-else v-for="job in getJobs" :key="job.id" class="container">
@@ -37,19 +41,15 @@
       ...mapActions(["fetchJobs"]),
     },
     computed: {
-      ...mapGetters(["getJobs", "getQuery"]),
+      ...mapGetters(["getJobs", "getQuery", "getLoading"]),
+      country() {
+        return this.$store.getters.getCountry;
+      },
     },
     created() {
       this.loading = true;
-      console.log({ state: this.store });
-      this.fetchJobs(this.getQuery)
-        .then(() => {
-          this.loading = null;
-        })
-        .catch((e) => {
-          this.loading = null;
-          console.log(e);
-        });
+      console.log({ state: this.getLoading });
+      this.fetchJobs(this.getQuery);
     },
   };
 </script>
@@ -58,6 +58,9 @@
   .parent {
     padding: 2% 10%;
 
+    @media (max-width: 768px) {
+      padding: 10px;
+    }
     .loading {
       text-align: center;
       font-size: 1.5em;
